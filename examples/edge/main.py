@@ -36,6 +36,9 @@ def train(baseModel, output_model_path, epochs=1):
     logging.info(f'epochs: {epochs}')
 
     base_weight_path = os.path.join("/repos", baseModel.path, "model.sav")
+    logging.info(os.getcwd())
+    os.chdir('/app')
+    logging.info(os.getcwd())
     try:
         FHIR_module.run()
         # metrics = mnist.train(data, output, epochs=epochs, resume=base_weight_path)
