@@ -1,8 +1,10 @@
 FROM tensorflow/tensorflow
 
 RUN pip install --upgrade pip && \
-    pip install --upgrade protobuf \
-    pip install grpcio grpcio-tools
+    pip install --upgrade protobuf==3.20.* \
+    pip install grpcio grpcio-tools \
+    pip install pandas \
+    pip install scikit-learn
 
 ADD . /app
 ADD ./train /train
