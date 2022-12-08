@@ -9,6 +9,7 @@ import pandas as pd
 import numpy as np
 from time import time
 import os
+import logging
 
 
 def check_mapping_resource_type(resouce_type_mapping_codebook, hospital_mapping_codebook):
@@ -31,10 +32,10 @@ def check_mapping_resource_type(resouce_type_mapping_codebook, hospital_mapping_
     for i in range(len(hospital_mapping_codebook['LOINC code'])):
         if hospital_mapping_codebook['LOINC code'][i] not in target_loinc_code:
             complete_flag = False
-            print('LOINC code:{} is not mapping in Lab test:{}'.format(hospital_loinc_code[i], hospital_lab_test[i]))
-            print('Please add mapping')
+            logging.info('LOINC code:{} is not mapping in Lab test:{}'.format(hospital_loinc_code[i], hospital_lab_test[i]))
+            logging.info('Please add mapping')
     if complete_flag:
-        print('Mapping relation is already finish!')
+        logging.info('Mapping relation is already finish!')
     return complete_flag
 
 
@@ -89,8 +90,8 @@ def create_big_table(fhir_url):
         df_big_table = pd.concat((df_big_table, df_temp), axis=1, copy=False)
         # print(df_big_table)
         # print('Big table test{}'.format(i+1))
-    print(df_big_table)
-    print('Big table create successfully!!')
+    # print(df_big_table)
+    logging.info('Big table create successfully!!')
     # output big table become csv format
     df_big_table.to_csv('./data/Big_Table.csv')
 
@@ -106,10 +107,10 @@ def run():
     time_check_map_end = time()
 
     '''test data exist function'''
-    print(os.path.exists('data/Big_Table.csv') is False)
+    logging.info(os.path.exists('data/Big_Table.csv') is False)
     # Already mapping and check big table is exist or not
     if os.path.exists('data/Big_Table.csv') is False and check:
-        print('======Design big table======')
+        logging.info('======Design big table======')
         if os.path.exists('data') is False:
             os.mkdir('data')
         start_time_create_big_table = time()

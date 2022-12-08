@@ -8,5 +8,4 @@ RUN pip install --upgrade pip && \
     pip install openpyxl
 
 ADD . /app
-ADD ./train /train
 ENTRYPOINT [ "python", "/app/main.py" ]

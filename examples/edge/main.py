@@ -6,14 +6,9 @@ import random
 import grpc
 import service_pb2
 import service_pb2_grpc
-import tensorflow as tf
 import LinearR_edge
 import FHIR_module
 
-# import train_Fed
-# import mnist
-# import torch
-# import train_Fed
 
 OPERATOR_URI = os.getenv('OPERATOR_URI', "localhost:8787")
 APPLICATION_URI = "0.0.0.0:7878"
@@ -39,9 +34,8 @@ def train(baseModel, output_model_path, epochs=1):
     logging.info(os.getcwd())
     os.chdir('/app')
     logging.info(os.getcwd())
+    FHIR_module.run()
     try:
-        FHIR_module.run()
-        # metrics = mnist.train(data, output, epochs=epochs, resume=base_weight_path)
         # metrics = train_Fed.gain(data, output, epochs=epochs, resume=base_weight_path)
         metrics = LinearR_edge.run(output, resume=base_weight_path)
     except Exception as err:
@@ -103,11 +97,6 @@ def serve():
     logging.basicConfig(level=logging.DEBUG)
 
     logging.info("Start server... {}".format(APPLICATION_URI))
-
-    # if (tf.test.is_gpu_available()):
-    #     logging.info("GPU: True")
-    # else:
-    #     logging.info("GPU: False")
 
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     service_pb2_grpc.add_EdgeAppServicer_to_server(

@@ -42,14 +42,3 @@ def run(output, resume):
     metrics = {'rscore': reg.score(X_test, y_test)}
     pickle.dump(reg, open('%s' % (output), 'wb'))
     return metrics
-
-    '''load model test'''
-    # # save model
-    # pickle.dump(reg, open('model.sav', 'wb'))
-    # # load model
-    # load_model = pickle.load(open('model.sav', 'rb'))
-    #
-    # # update model parameters(coefficient and interpretation)
-    # load_model.coef_ *= 2
-    # print(load_model.coef_)
-    # # print(load_model.score(X_test, y_test))
