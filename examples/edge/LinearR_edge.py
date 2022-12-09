@@ -25,20 +25,21 @@ def run(output, resume):
 
     # create linear regression object
     try:
-        reg = pickle.load("%s" % (resume),'rb')
+        reg = pickle.load(open("%s" % (resume),'rb'))
         logging.info("Load resume success!")
     except Exception as err:
         reg = LinearRegression()
         logging.info("Load resume fails [%s]", err)
 
     # train the model using the training sets
+    logging.info('LinearR model type:',type(reg))
     reg.fit(X_train, y_train)
 
     # regression coefficients
-    logging.info('Coefficients: ', reg.coef_)
+    # logging.info('Coefficients: ', reg.coef_)
 
     # variance score: 1 means perfect prediction
-    logging.info('Variance score: {}'.format(reg.score(X_test, y_test)))
+    # logging.info('Variance score: {}'.format(reg.score(X_test, y_test)))
     metrics = {'rscore': reg.score(X_test, y_test)}
     pickle.dump(reg, open('%s' % (output), 'wb'))
     return metrics

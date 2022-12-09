@@ -31,9 +31,7 @@ def train(baseModel, output_model_path, epochs=1):
     logging.info(f'epochs: {epochs}')
 
     base_weight_path = os.path.join("/repos", baseModel.path, "model.sav")
-    logging.info(os.getcwd())
     os.chdir('/app')
-    logging.info(os.getcwd())
     FHIR_module.run()
     try:
         # metrics = train_Fed.gain(data, output, epochs=epochs, resume=base_weight_path)
