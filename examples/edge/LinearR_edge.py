@@ -32,7 +32,7 @@ def run(output, resume):
         logging.info("Load resume fails [%s]", err)
 
     # train the model using the training sets
-    logging.info('LinearR model type:',type(reg))
+    logging.info('LinearR model type:{}'.format(type(reg)))
     reg.fit(X_train, y_train)
 
     # regression coefficients
