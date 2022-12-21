@@ -6,7 +6,7 @@ import random
 import grpc
 import service_pb2
 import service_pb2_grpc
-import LinearR_edge
+import LogisticR_edge
 import FHIR_module
 
 
@@ -32,10 +32,10 @@ def train(baseModel, output_model_path, epochs=1):
 
     base_weight_path = os.path.join("/repos", baseModel.path, "model.sav")
     os.chdir('/app')
-    FHIR_module.run()
+    # FHIR_module.run()
     try:
         # metrics = train_Fed.gain(data, output, epochs=epochs, resume=base_weight_path)
-        metrics = LinearR_edge.run(output, resume=base_weight_path)
+        metrics = LogisticR_edge.run(output, resume=base_weight_path)
     except Exception as err:
         # print('metrics', err)
         logging.debug("metrics ERR : {}".format(err))
