@@ -33,12 +33,14 @@ def run(output, resume):
         logistic = pickle.load(open("%s" % (resume),'rb'))
         logging.info("Load resume success!")
     except Exception as err:
-        logistic = linear_model.LogisticRegression()
+        # logistic = SGDClassifier(max_iter=1000, tol=1e-3)
+        logistic = linear_model.SGDClassifier(max_iter=1000,shuffle=False)
+        logistic.fit(X_train,y_train)
         logging.info("Load resume fails [%s]", err)
 
     # train the model using the training sets
     logging.info('LinearR model type:{}'.format(type(logistic)))
-    logistic.fit(X_train,y_train)
+    
 
     # regression coefficients
     # logging.info('Coefficients: ', reg.coef_)
