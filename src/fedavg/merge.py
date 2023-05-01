@@ -23,10 +23,13 @@ def merge(models, merged_output_path):
 
     factors_coef = np.array(factors_coef)
     factors_intercpet = np.array(factors_intercept)
+
     merged_coef = sum(factors_coef)
     merged_intercpet = sum(factors_intercpet)
+
     logging.info(merged_coef)
     logging.info(merged_intercpet)
+
     LinearR_model[0].coef_ = merged_coef
     LinearR_model[0].intercept_ = merged_intercpet
     pickle.dump(LinearR_model[0], open('%s' % merged_output_path, 'wb'))

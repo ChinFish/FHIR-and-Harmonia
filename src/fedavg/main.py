@@ -6,6 +6,8 @@ import grpc
 import service_pb2
 import service_pb2_grpc
 from merge import merge
+import pandas as pd
+import numpy as np
 
 OPERATOR_URI = os.getenv('OPERATOR_URI', '127.0.0.1:8787')
 APPLICATION_URI = os.getenv('APPLICATION_URI', '0.0.0.0:7878')
@@ -78,9 +80,19 @@ def aggregate(local_models, aggregated_model):
     # logging.debug("local models:",local_models)
     for local_model in local_models:
         path = os.path.join(REPO_ROOT, local_model.path, MODEL_FILENAME)
-        # if os.path.isfile(path_G):
+        # models.append({'path': path, 'size': local_model.datasetSize})
+        check_array_path = os.path.join(REPO_ROOT, local_model.path)
+        check_array_path = check_array_path + '/' + 'check_array.csv'
+        logging.info('check array path:{}'.format(check_array_path))
 
-        models.append({'path': path, 'size': local_model.datasetSize})
+        check_array = pd.read_csv(check_array_path)
+        check_array = np.array(check_array['0'])
+
+        # Add check array to models
+        # parts = path.split('/')
+        # subdirectory = parts[3]
+        # if subdirectory == 'local-model2':
+        models.append({'path': path, 'size': local_model.datasetSize, 'check_array': check_array})
         # logging.debug('path_G',path_G)
         # logging.debug('path_D',path_D)
     output_path = os.path.join(REPO_ROOT, aggregated_model.path, MODEL_FILENAME)
