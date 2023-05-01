@@ -29,4 +29,4 @@ def merge(models, merged_output_path):
     logging.info(merged_intercpet)
     LinearR_model[0].coef_ = merged_coef
     LinearR_model[0].intercept_ = merged_intercpet
-    pickle.dump(LinearR_model[0], open('%s' % (merged_output_path), 'wb'))
+    pickle.dump(LinearR_model[0], open('%s' % merged_output_path, 'wb'))

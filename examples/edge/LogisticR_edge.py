@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 
 def run(output, resume):
     ''' model Training'''
-    data = pd.read_csv('../FHIR_part/data/Big_Table_processed.csv')
+    data = pd.read_csv('data/Big_Table_processed.csv')
     X = data.iloc[:, 0:-1]
     X = X.drop(columns=['Patient_ID'])
     Y = data.iloc[:, -1]
@@ -17,7 +17,7 @@ def run(output, resume):
 
     # Create check array
     hospital_map_codebook = pd.read_excel(
-        '../FHIR_part/predict fat codebook.xlsx')
+        'predict fat codebook.xlsx')
     lab_test = list(hospital_map_codebook['Lab test'])
     remove = ['Body weight', 'Body height']
     lab_test = [elem for elem in lab_test if elem not in remove]
