@@ -51,7 +51,7 @@ def run(output, resume):
 
     check_array_path = output.replace('/model.sav', '')
 
-    check_array_path = output + '/' + 'check_array.csv'
+    check_array_path = check_array_path + '/' + 'check_array.csv'
     logging.info(check_array_path)
     df_check_array.to_csv(check_array_path)
     return metrics
