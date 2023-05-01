@@ -9,7 +9,6 @@ import service_pb2_grpc
 import LogisticR_edge
 import FHIR_module
 
-
 OPERATOR_URI = os.getenv('OPERATOR_URI', "localhost:8787")
 APPLICATION_URI = "0.0.0.0:7878"
 __DATA = []
@@ -35,7 +34,7 @@ def train(baseModel, output_model_path, epochs=1):
     # FHIR_module.run()
     try:
         # metrics = train_Fed.gain(data, output, epochs=epochs, resume=base_weight_path)
-        metrics = LogisticR_edge.run(output, resume=base_weight_path)
+        metrics, check_array = LogisticR_edge.run(output, resume=base_weight_path)
     except Exception as err:
         # print('metrics', err)
         logging.debug("metrics ERR : {}".format(err))
@@ -49,7 +48,8 @@ def train(baseModel, output_model_path, epochs=1):
         result = service_pb2.LocalTrainResult(
             error=0,
             datasetSize=2500,
-            metrics=metrics
+            metrics=metrics,
+            check_array=check_array
         )
 
         response = stub.LocalTrainFinish(result)
