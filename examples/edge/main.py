@@ -57,7 +57,7 @@ def train(baseModel, output_model_path, epochs=1):
     except Exception as err:
         logging.error('got error: {}'.format(err))
 
-    # logging.debug("sending grpc message succeeds, response: {}".format(response))
+    logging.debug("sending grpc message succeeds, response: {}".format(response))
 
 
 class EdgeAppServicer(service_pb2_grpc.EdgeAppServicer):

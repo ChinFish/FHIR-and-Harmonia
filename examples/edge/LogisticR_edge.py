@@ -46,7 +46,7 @@ def run(output, resume):
     # variance score: 1 means perfect prediction
     # logging.info('Variance score: {}'.format(reg.score(X_test, y_test)))
     metrics = {'accuracy': logistic.score(X_test, y_test)}
-    pickle.dump(logistic, open('%s' % output, 'wb'))
+    pickle.dump(logistic, open('%s' % (output), 'wb'))
     check_output_path = output + '/' + 'check_array.csv'
     df_check_array.to_csv(check_output_path)
     return metrics
