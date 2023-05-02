@@ -51,30 +51,6 @@ def aggregate(local_models, aggregated_model):
         send_result(AGGREGATE_FAIL)
         return
 
-    '''For GAIN model'''
-    # models_D = []
-    # models_G = []
-    # #logging.debug("local models:",local_models)
-    # for local_model in local_models:
-    #     path_G = os.path.join(REPO_ROOT, local_model.path, G_MODEL_FILENAME)
-    #     path_D = os.path.join(REPO_ROOT, local_model.path, D_MODEL_FILENAME)
-    #     #if os.path.isfile(path_G):
-    #
-    #     models_G.append({'path_G': path_G, 'size_G': local_model.datasetSize})
-    #     #if os.path.isfile(path_D):
-    #     models_D.append({'path_D': path_D, 'size_D': local_model.datasetSize})
-    #     #logging.debug('path_G',path_G)
-    #     #logging.debug('path_D',path_D)
-    # output_path_G = os.path.join(REPO_ROOT, aggregated_model.path, G_MODEL_FILENAME)
-    # output_path_D = os.path.join(REPO_ROOT, aggregated_model.path, D_MODEL_FILENAME)
-    #
-    # logging.debug("models_D: %s", models_D)
-    # logging.debug("models_G: %s", models_G)
-    # logging.debug("output_path_G: %s", output_path_G)
-    # logging.debug("output_path_D: %s", output_path_D)
-    # merge(models_G, output_path_G,'G')
-    # merge(models_D, output_path_D,'D')
-
     '''For LinearR model'''
     models = []
     # logging.debug("local models:",local_models)
