@@ -25,7 +25,6 @@ def merge(models, merged_output_path):
     check_array = np.array(check_array)
     logging.info('numpy check array:{}'.format(check_array))
 
-
     # deal with coef shape problem
     shaped_coef = []
 
@@ -41,9 +40,6 @@ def merge(models, merged_output_path):
         shaped_coef.append(new_coef)
     shaped_coef = np.array(shaped_coef)
     logging.info('經過shape處理的coef:{}'.format(shaped_coef))
-    dot_check_array = np.prod(check_array, axis=0)
-    dot_coef = dot_check_array * shaped_coef
-
 
     factors_coef = []
     factors_intercept = []
@@ -56,21 +52,31 @@ def merge(models, merged_output_path):
     factors_intercpet = np.array(factors_intercept)
 
     merged_coef = sum(factors_coef)
+    dot_check_array = np.prod(check_array, axis=0)
+    dot_coef = dot_check_array * merged_coef
+    merged_coef = merged_coef[dot_coef != 0]
+
     merged_intercpet = sum(factors_intercpet)
 
     logging.info(merged_coef)
     logging.info(merged_intercpet)
 
+    # LinearR_model[0].coef_ = merged_coef
     LinearR_model[0].coef_ = merged_coef
     LinearR_model[0].intercept_ = merged_intercpet
     pickle.dump(LinearR_model[0], open('%s' % merged_output_path, 'wb'))
 
     coef_path = merged_output_path.replace('/model.sav', '')
-    coef_path = coef_path + '/' + 'coef.csv'
-    logging.info('coef path:{}'.format(coef_path))
-    dot_coef.to_csv(coef_path)
-
-    intercept_path = merged_output_path.replace('/model.sav', '')
-    intercept_path = intercept_path + '/' + 'intercept.csv'
-    logging.info('coef path:{}'.format(intercept_path))
-    merged_intercpet.to_csv(intercept_path)
+    coef_path = coef_path + '/' + 'check_array.csv'
+    logging.info('check array path:{}'.format(coef_path))
+    dot_coef.to_csv(dot_check_array)
+    logging.info('Merge Successful!')
+    # coef_path = merged_output_path.replace('/model.sav', '')
+    # coef_path = coef_path + '/' + 'coef.csv'
+    # logging.info('coef path:{}'.format(coef_path))
+    # dot_coef.to_csv(coef_path)
+    #
+    # intercept_path = merged_output_path.replace('/model.sav', '')
+    # intercept_path = intercept_path + '/' + 'intercept.csv'
+    # logging.info('coef path:{}'.format(intercept_path))
+    # merged_intercpet.to_csv(intercept_path)
