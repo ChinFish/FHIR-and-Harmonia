@@ -23,7 +23,7 @@ def run(output, resume):
         logging.info('check array path:{}'.format(check_array_path))
         check_array = pd.read_csv(check_array_path)
         check_array = np.array(check_array['0'])
-        logging.info("Load resume success!")
+
         # Load features to select according to check array
         hospital_map_codebook = pd.read_excel(
             'predict fat codebook.xlsx')
@@ -31,14 +31,15 @@ def run(output, resume):
         remove = ['Body weight', 'Body height']
         lab_test = [elem for elem in lab_test if elem not in remove]
         lab_test.sort()
-        logging.info('lab test:{}'.format(lab_test))
 
         features = [lab_test for lab_test, check_array in zip(lab_test, check_array) if check_array == 1]
+        logging.info('lab test:{}'.format(features))
         X = X[features]
         X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.3, random_state=1)
         logistic.fit(X_train, y_train)
 
         logging.info('check array:{}'.format(check_array))
+        logging.info("Load resume success!")
 
     except Exception as err:
         logistic = linear_model.LogisticRegression()
@@ -68,10 +69,9 @@ def run(output, resume):
     # logging.info('Variance score: {}'.format(reg.score(X_test, y_test)))
     metrics = {'accuracy': logistic.score(X_test, y_test)}
     pickle.dump(logistic, open('%s' % output, 'wb'))
-    
+
     check_array_path = output.replace('/model.sav', '')
     check_array_path = check_array_path + '/' + 'check_array.csv'
-    logging.info(check_array_path)
     df_check_array = pd.DataFrame(check_array)
     df_check_array.to_csv(check_array_path)
     logging.info('model and check array save successfully!')
