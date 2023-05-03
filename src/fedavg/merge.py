@@ -3,6 +3,7 @@ import logging
 # import tensorflow as tf
 import numpy as np
 import pickle
+import pandas as pd
 
 
 def merge(models, merged_output_path):
@@ -66,10 +67,11 @@ def merge(models, merged_output_path):
     LinearR_model[0].intercept_ = merged_intercpet
     pickle.dump(LinearR_model[0], open('%s' % merged_output_path, 'wb'))
 
-    coef_path = merged_output_path.replace('/model.sav', '')
-    coef_path = coef_path + '/' + 'check_array.csv'
-    logging.info('check array path:{}'.format(coef_path))
-    dot_coef.to_csv(dot_check_array)
+    check_array_path = merged_output_path.replace('/model.sav', '')
+    check_array_path = check_array_path + '/' + 'check_array.csv'
+    logging.info('check array path:{}'.format(check_array_path))
+    df_dot_check_array = pd.DataFrame(dot_check_array)
+    df_dot_check_array.to_csv(check_array_path)
     logging.info('Merge Successful!')
     # coef_path = merged_output_path.replace('/model.sav', '')
     # coef_path = coef_path + '/' + 'coef.csv'
