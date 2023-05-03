@@ -57,8 +57,10 @@ def merge(models, merged_output_path):
     # This line may cause problem
     factors_coef = np.array(factors_coef)
     factors_intercpet = np.array(factors_intercept)
+    logging.info('factors coef:{}'.format(factors_coef))
 
     merged_coef = sum(factors_coef)
+    logging.info('merge coef:{}'.format(merged_coef))
     dot_check_array = np.prod(check_array, axis=0)
     dot_coef = dot_check_array * merged_coef
     merged_coef = merged_coef[dot_coef != 0]
