@@ -17,10 +17,12 @@ def merge(models, merged_output_path):
 
     LinearR_model = [pickle.load(open(m['path'], 'rb')) for m in models]
     coef = [m.coef_ for m in LinearR_model]
+    logging.info('coef:{}'.format(coef))
     intercept = [m.intercept_ for m in LinearR_model]
+    logging.info('intercept:{}'.format(intercept))
     total_data_size = sum(m['size'] for m in models)
     factors = [m['size'] / total_data_size for m in models]
-    check_array = [m['check_array'] / total_data_size for m in models]
+    check_array = [m['check_array'] for m in models]
     logging.info('check array:{}'.format(check_array))
 
     check_array = np.array(check_array)
