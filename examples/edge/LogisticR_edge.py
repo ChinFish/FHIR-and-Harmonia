@@ -38,8 +38,6 @@ def run(output, resume):
         X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.3, random_state=1)
         logistic.fit(X_train, y_train)
 
-        # df_check_array = pd.DataFrame(check_array)
-
         logging.info('check array:{}'.format(check_array))
 
     except Exception as err:
@@ -56,7 +54,6 @@ def run(output, resume):
         lab_test.sort()
         features = list(X.columns)
         check_array = [1 if x in features else 0 for x in lab_test]
-        df_check_array = pd.DataFrame(check_array)
 
         logging.info('check array:{}'.format(check_array))
         logging.info("Load resume fails [%s]", err)
@@ -71,10 +68,11 @@ def run(output, resume):
     # logging.info('Variance score: {}'.format(reg.score(X_test, y_test)))
     metrics = {'accuracy': logistic.score(X_test, y_test)}
     pickle.dump(logistic, open('%s' % output, 'wb'))
-    logging.info('model save successfully!')
-
+    
     check_array_path = output.replace('/model.sav', '')
     check_array_path = check_array_path + '/' + 'check_array.csv'
     logging.info(check_array_path)
+    df_check_array = pd.DataFrame(check_array)
     df_check_array.to_csv(check_array_path)
+    logging.info('model and check array save successfully!')
     return metrics
