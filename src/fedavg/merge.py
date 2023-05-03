@@ -17,6 +17,10 @@ def merge(models, merged_output_path):
 
     LinearR_model = [pickle.load(open(m['path'], 'rb')) for m in models]
     coef = [m.coef_ for m in LinearR_model]
+    temp_array = []
+    for i in coef:
+        temp_array.append(i.flatten())
+    coef = temp_array
     logging.info('coef:{}'.format(coef))
     intercept = [m.intercept_ for m in LinearR_model]
     logging.info('intercept:{}'.format(intercept))
