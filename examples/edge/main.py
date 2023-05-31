@@ -4,6 +4,7 @@ import threading
 import os
 import random
 import grpc
+import pandas as pd
 import service_pb2
 import service_pb2_grpc
 import LogisticR_edge
@@ -23,7 +24,7 @@ def get_training_data():
 
 
 def train(baseModel, output_model_path, epochs=1):
-    # data = 'train/chr22_train_TWB_100.hap'
+    data = pd.read_csv('data/Big_Table_processed.csv')
     output = os.path.join("/repos", output_model_path, 'model.sav')
     logging.info(f'input path: [{baseModel.path}]')
     logging.info(f'output path: [{output}]')
@@ -47,7 +48,7 @@ def train(baseModel, output_model_path, epochs=1):
         stub = service_pb2_grpc.EdgeOperatorStub(channel)
         result = service_pb2.LocalTrainResult(
             error=0,
-            datasetSize=2500,
+            datasetSize=len(data),
             metrics=metrics,
         )
 
