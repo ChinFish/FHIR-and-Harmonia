@@ -36,13 +36,15 @@ def run(output, resume):
         logging.info('lab test:{}'.format(features))
         X = X[features]
         X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.3, random_state=1)
+        iter = int(logistic.n_iter_) + 1
+        logistic.max_iter = iter
         logistic.fit(X_train, y_train)
 
         logging.info('check array:{}'.format(check_array))
         logging.info("Load resume success!")
 
     except Exception as err:
-        logistic = linear_model.LogisticRegression()
+        logistic = linear_model.LogisticRegression(max_iter=1)
         X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.3, random_state=1)
         logistic.fit(X_train, y_train)
 
